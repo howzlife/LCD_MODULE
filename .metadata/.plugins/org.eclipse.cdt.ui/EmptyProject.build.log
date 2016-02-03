@@ -1,20 +1,20 @@
-22:51:18 **** Incremental Build of configuration Release for project EmptyProject ****
-make all 
+22:38:30 **** Incremental Build of configuration Release for project EmptyProject ****
+make -k all 
 Invoking: Print Size
 avr-size --format=avr --mcu=atmega2560 EmptyProject.elf
 AVR Memory Usage
 ----------------
 Device: atmega2560
 
-Program:   20646 bytes (7.9% Full)
+Program:   22142 bytes (8.4% Full)
 (.text + .data + .bootloader)
 
-Data:       4959 bytes (60.5% Full)
+Data:       4866 bytes (59.4% Full)
 (.data + .bss + .noinit)
 
 
 Finished building: sizedummy
  
 
-22:51:18 Build Finished (took 82ms)
+22:38:30 Build Finished (took 109ms)
 

@@ -1,4 +1,4 @@
-09:24:53 **** Incremental Build of configuration Release for project FreeRTOS801 ****
+22:38:29 **** Incremental Build of configuration Release for project FreeRTOS801 ****
 make all 
 Invoking: Print Size
 avr-size --format=avr --mcu=atmega2560 libFreeRTOS801.a
@@ -1121,6 +1121,40 @@ Program:       0 bytes (0.0% Full)
 (.text + .data + .bootloader)
 
 Data:          0 bytes (0.0% Full)
+(.data + .bss + .noinit)
+
+
+Finished building: sizedummy
+ 
+22:38:29 **** Incremental Build of configuration Release for project CEG4166_RTS_Lib ****
+make all 
+Invoking: Print Size
+avr-size --format=avr --mcu=atmega2560 libCEG4166_RTS_Lib.a
+AVR Memory Usage
+----------------
+Device: atmega2560
+
+Program:       0 bytes (0.0% Full)
+(.text + .data + .bootloader)
+
+Data:          0 bytes (0.0% Full)
+(.data + .bss + .noinit)
+
+
+Finished building: sizedummy
+ 
+22:38:30 **** Incremental Build of configuration Release for project EmptyProject ****
+make -k all 
+Invoking: Print Size
+avr-size --format=avr --mcu=atmega2560 EmptyProject.elf
+AVR Memory Usage
+----------------
+Device: atmega2560
+
+Program:   22142 bytes (8.4% Full)
+(.text + .data + .bootloader)
+
+Data:       4866 bytes (59.4% Full)
 (.data + .bss + .noinit)
 
 

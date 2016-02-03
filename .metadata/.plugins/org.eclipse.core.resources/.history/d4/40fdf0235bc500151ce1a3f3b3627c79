@@ -1,0 +1,130 @@
+////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////
+////    main.c
+////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////
+
+#include <stdlib.h>
+#include <stdbool.h>
+#include <string.h>
+#include <stdio.h>
+
+#include <avr/io.h>
+
+/* Scheduler include files. */
+#include "FreeRTOS.h"
+#include "task.h"
+#include "serial.h"
+#include "queue.h"
+#include "semphr.h"
+
+/* serial interface include file. */
+#include "usartserial.h"
+
+/*-----------------------------------------------------------*/
+/* Create a handle for the serial port. */
+extern xComPortHandle xSerialPort;
+extern xComPortHandle xSerialPort2;
+
+
+/*-----------------------------------------------------------*/
+
+/* Main program loop */
+//int main(void) __attribute__((OS_main));
+int usartfd;
+uint8_t const USART0_ID = 0x90;
+
+uint8_t const CLEAR = 0x01;
+uint8_t const ROW_1 = 0x80;
+uint8_t const ROW_2 = 0xC0;
+uint8_t const SET_ROWS = 0x38;
+
+
+// Private methods
+static void print(char* topMsg, char* bottomMsg);
+static void transmit(uint8_t command);
+
+int main(void)
+{
+    // turn on the serial port for debugging or for other USART reasons.
+	usartfd = usartOpen( USART0_ID, 115200, portSERIAL_BUFFER_TX, portSERIAL_BUFFER_RX); //  serial port: WantedBaud, TxQueueLength, RxQueueLength (8n1)
+
+	usart_print_P(PSTR("\r\n\n\nHello World!\r\n")); // Ok, so we're alive...
+
+    xTaskCreate(
+		taskInitLCD
+		,  (const portCHAR *)"RedLED" // Main Arduino Mega 2560, Freetronics EtherMega (Red) LED Blink
+		,  256				// Tested 9 free @ 208
+		,  NULL
+		,  3
+		,  NULL ); // */
+
+	usart_printf_P(PSTR("\r\n\nFree Heap Size: %u\r\n"),xPortGetFreeHeapSize() ); // needs heap_1 or heap_2 for this function to succeed.
+
+	vTaskStartScheduler();
+
+	usart_print_P(PSTR("\r\n\n\nGoodbye... no space for idle task!\r\n")); // Doh, so we're dead...
+
+	initLCD();
+}
+
+void initLCD()
+{
+	// Initialize the serial port handle for the LCD
+	xSerialPort2 = xSerialPortInitMinimal(USART1, 9600, portSERIAL_BUFFER_TX, portSERIAL_BUFFER_RX);
+
+	// Set the LCD to display 2 rows and clear it
+	transmit(SET_ROWS);
+	transmit(CLEAR);
+
+	// The task is now initialized
+	xSerialxPrint_P(&xSerialPort, PSTR("\nLCD Module Initialized\n"));
+}
+
+void taskInitLCD(void *pvParameters)
+{
+	char* topMsg = "Hello World 1";
+
+	// Ambient and average temperatures will be displayed on the bottom row
+	char* bottomMsg = "Hello World 2";
+
+	// Display the averages on the LCD
+	print(topMsg, bottomMsg);
+}
+
+static void print(char* topMsg, char* bottomMsg)
+{
+	// Truncate the strings if they are too long (over 16 characters)
+	if (sizeof(topMsg) > 16) topMsg[16] = '\0';
+	if (sizeof(bottomMsg) > 16) bottomMsg[16] = '\0';
+
+	// Clear the display
+	transmit(CLEAR);
+
+	// Print message for the top row
+	transmit(ROW_1);
+	xSerialxPrintf(&xSerialPort2, "%s", topMsg);
+
+	// Print message for the bottom row
+	transmit(ROW_2);
+	xSerialxPrintf(&xSerialPort2, "%s", bottomMsg);
+}
+
+static void transmit(uint8_t command)
+{
+	// Send the Command character followed by the extended LCD command
+	xSerialxPrintf(&xSerialPort2, "%c", 0xFE);
+	xSerialxPrintf(&xSerialPort2, "%c", command);
+}
+
+void vApplicationStackOverflowHook( TaskHandle_t xTask,
+                                    portCHAR *pcTaskName )
+{
+
+	DDRB  |= _BV(DDB7);
+	PORTB |= _BV(PORTB7);       // main (red PB7) LED on. Mega main LED on and die.
+	while(1);
+}
+
+/*-----------------------------------------------------------*/
+

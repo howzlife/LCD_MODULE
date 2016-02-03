@@ -1,0 +1,40 @@
+/*----------------------------------------------------------------------------
+ * lcd.c
+ *
+ * @author Nicolas Dubus 3811637
+ *----------------------------------------------------------------------------*/
+
+#include <stdlib.h>
+#include <stdio.h>
+#include <string.h>
+
+#include "FreeRTOS.h"
+#include "queue.h"
+#include "serial.h"
+
+// Port Handles for Serial and LCD
+extern xComPortHandle xSerialPort;
+
+
+// Constants
+
+uint8_t const CLEAR_LCD = 0x01;
+uint8_t const TOP_ROW = 0x80;
+uint8_t const BOTTOM_ROW = 0xC0;
+uint8_t const SET_BOTH_ROWS = 0x38;
+/*----------------------------------------------------------------------------
+ * Description:
+ * 		Performs all initialization for the LCD screen display
+ *----------------------------------------------------------------------------*/
+void initLCD()
+{
+	// Initialize the serial port handle for the LCD
+	xSerialPort = xSerialPortInitMinimal(USART1, 9600, portSERIAL_BUFFER_TX, portSERIAL_BUFFER_RX);
+
+	// Set the LCD to display 2 rows and clear it
+	avrSerialxPrintf_P(&xSerialPort,PSTR("%c"),0xFE);
+	avrSerialxPrintf_P(&xSerialPort,PSTR("%c"),0x80);
+
+	// The task is now initialized
+	xSerialxPrint_P(&xSerialPort, PSTR("\nLCD Module Initialized\n"));
+}

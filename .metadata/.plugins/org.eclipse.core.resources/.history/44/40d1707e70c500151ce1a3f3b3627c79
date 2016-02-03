@@ -1,0 +1,16 @@
+/*
+ * lcd.h
+ *
+ *  Created on: Jan 27, 2016
+ *      Author: nicolasdubus
+ */
+
+#ifndef LCD_LCD_H_
+#define LCD_LCD_H_
+
+void initializeLCD(void);
+
+void displayMessage(char* message);
+void displayMessage(char* topMessage, char* bottomMessage);
+
+#endif /* LCD_LCD_H_ */

@@ -1,4 +1,4 @@
-09:24:53 **** Incremental Build of configuration Release for project FreeRTOS801 ****
+22:38:29 **** Incremental Build of configuration Release for project FreeRTOS801 ****
 make all 
 Invoking: Print Size
 avr-size --format=avr --mcu=atmega2560 libFreeRTOS801.a
@@ -1127,5 +1127,5 @@ Data:          0 bytes (0.0% Full)
 Finished building: sizedummy
  
 
-09:24:53 Build Finished (took 334ms)
+22:38:29 Build Finished (took 225ms)
 

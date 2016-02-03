@@ -1,0 +1,16 @@
+10:02:50 **** Build of configuration Release for project NewProject ****
+make all 
+Building file: ../template.c
+Invoking: AVR Compiler
+avr-gcc -I"/Users/nicolasdubus/Downloads/CEG4166FreeRTOSProjects/FreeRTOS801/include" -I"/Users/nicolasdubus/Downloads/CEG4166FreeRTOSProjects/CEG4166_RTS_Lib/include" -DGCC_MEGA_AVR -Wall -O2 -ffunction-sections -fdata-sections -mcall-prologues -mrelax -std=gnu99 -funsigned-char -funsigned-bitfields -mmcu=atmega2560 -DF_CPU=16000000UL -MMD -MP -MF"template.d" -MT"template.o" -c -o "template.o" "../template.c"
+Finished building: ../template.c
+ 
+Building target: NewProject.elf
+Invoking: AVR C Linker
+avr-gcc -Wl,-Map,NewProject.map --gc-sections -Wl,-u,vfprintf -Wl -L"/Users/nicolasdubus/Downloads/CEG4166FreeRTOSProjects/FreeRTOS801/Release" -L"/Users/nicolasdubus/Downloads/CEG4166FreeRTOSProjects/CEG4166_RTS_Lib/Release" -mmcu=atmega2560 -o "NewProject.elf"  ./template.o  /Users/nicolasdubus/Downloads/CEG4166FreeRTOSProjects/FreeRTOS801/Release/libFreeRTOS801.a -lm -lprintf_flt -lFreeRTOS801 -lCEG4166_RTS_Lib
+avr-gcc: error: unrecognized command line option '--gc-sections'
+avr-gcc: error: unrecognized command line option '-Wl'
+make: *** [NewProject.elf] Error 1
+
+10:02:50 Build Finished (took 177ms)
+

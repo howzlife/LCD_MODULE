@@ -1,0 +1,68 @@
+////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////
+////    main.c
+////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////
+
+#include <stdlib.h>
+#include <stdbool.h>
+#include <string.h>
+#include <stdio.h>
+
+#include <avr/io.h>
+
+/* Scheduler include files. */
+#include "FreeRTOS.h"
+#include "task.h"
+#include "queue.h"
+#include "semphr.h"
+#include "lcd.h"
+
+/* serial interface include file. */
+//#include "usartserial.h"
+#include "serial.h"
+
+/*-----------------------------------------------------------*/
+/* Create a handle for the serial port. */
+//extern xComPortHandle xSerialPort;
+
+/*-----------------------------------------------------------*/
+
+/* Main program loop */
+//int main(void) __attribute__((OS_main));
+int usartfda;
+int usartfdb;
+
+int main(void)
+{
+
+	initLCD();
+
+    // turn on the serial port for debugging or for other USART reasons.
+//	usartfda = usartOpen( USART0_ID, 115200, portSERIAL_BUFFER_TX, portSERIAL_BUFFER_RX); //  serial port: WantedBaud, TxQueueLength, RxQueueLength (8n1)
+//    usartfdb = usartOpen( USART1_ID, 9600, portSERIAL_BUFFER_TX, portSERIAL_BUFFER_RX); //  serial port: WantedBaud, TxQueueLength, RxQueueLength (8n1)
+//	usart_print_P(PSTR("\r\n\n\nHello WorldTEST\r\n")); // Ok, so we're alive...
+//    usart_xprintf(usartfdb,);
+
+
+	//usart_printf_P(PSTR("\r\n\nFree Heap Size: %u\r\n"),xPortGetFreeHeapSize() ); // needs heap_1 or heap_2 for this function to succeed.
+
+	vTaskStartScheduler();
+
+	//usart_print_P(PSTR("\r\n\n\nGoodbye... no space for idle task!\r\n")); // Doh, so we're dead...
+
+}
+
+/*-----------------------------------------------------------*/
+
+
+void vApplicationStackOverflowHook( TaskHandle_t xTask,
+                                    portCHAR *pcTaskName )
+{
+
+	DDRB  |= _BV(DDB7);
+	PORTB |= _BV(PORTB7);       // main (red PB7) LED on. Mega main LED on and die.
+	while(1);
+}
+
+/*-----------------------------------------------------------*/

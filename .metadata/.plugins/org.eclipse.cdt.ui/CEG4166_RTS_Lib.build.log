@@ -1,4 +1,4 @@
-22:51:18 **** Incremental Build of configuration Release for project CEG4166_RTS_Lib ****
+22:38:29 **** Incremental Build of configuration Release for project CEG4166_RTS_Lib ****
 make all 
 Invoking: Print Size
 avr-size --format=avr --mcu=atmega2560 libCEG4166_RTS_Lib.a
@@ -16,5 +16,5 @@ Data:          0 bytes (0.0% Full)
 Finished building: sizedummy
  
 
-22:51:18 Build Finished (took 84ms)
+22:38:30 Build Finished (took 97ms)
 

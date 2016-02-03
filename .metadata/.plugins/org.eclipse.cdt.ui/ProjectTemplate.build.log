@@ -1,0 +1,7 @@
+11:45:50 **** Clean-only build of configuration Release for project ProjectTemplate ****
+make clean 
+rm -rf  ProjectTemplate.hex  ./lcd/lcd.o  ./template.o  ProjectTemplate.eep  sizedummy  ProjectTemplate.lss  ./lcd/lcd.d  ./template.d  ProjectTemplate.elf
+ 
+
+11:45:50 Build Finished (took 74ms)
+
