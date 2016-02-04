@@ -1,0 +1,41 @@
+/*
+ * lcd.h
+ *
+ *  Created on: Jan 27, 2016
+ *      Author: nicolasdubus
+ */
+
+#ifndef LCD_LCD_H_
+#define LCD_LCD_H_
+
+void initializeLCD(void);
+void displayOneMessage(char* message);
+void displayTwoMessages(char* topMessage, char* bottomMessage);
+void displayTemperatures(uint8_t *temperatures);
+
+
+/*----------------------------------------------------------------------------
+ * Description:
+ * 		Control methods used as the foundation for subsequent methods
+ *
+ * Parameters:
+ * 		uint8_t (hexadecimal command)
+ *      char* (character array)
+ *----------------------------------------------------------------------------*/
+void send_ext_cmd(uint8_t);
+void send_chars(char*);
+
+/*----------------------------------------------------------------------------
+ * Description:
+ * 		Writes string to entire LCD, first Row or Second Row respectively
+ *
+ * Parameters:
+ * 		msg: Alphanumeric string to be displayed on LCD
+ *----------------------------------------------------------------------------*/
+void writeLCD(char*);
+void writeLCDRowOne(char*);
+void writeLCDRowTwo(char*);
+
+
+
+#endif /* LCD_LCD_H_ */

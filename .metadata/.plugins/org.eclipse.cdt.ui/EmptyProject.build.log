@@ -1,20 +1,42 @@
-22:38:30 **** Incremental Build of configuration Release for project EmptyProject ****
+20:27:24 **** Incremental Build of configuration Release for project EmptyProject ****
 make -k all 
+Building file: ../lcd/lcd.c
+Invoking: AVR Compiler
+avr-gcc -I"/Users/nicolasdubus/Downloads/CEG4166FreeRTOSProjects/FreeRTOS801/include" -I"/Users/nicolasdubus/Downloads/CEG4166FreeRTOSProjects/CEG4166_RTS_Lib/include" -DGCC_MEGA_AVR -Wall -O2 -ffunction-sections -fdata-sections -mcall-prologues -mrelax -std=gnu99 -funsigned-char -funsigned-bitfields -mmcu=atmega2560 -DF_CPU=16000000UL -MMD -MP -MF"lcd/lcd.d" -MT"lcd/lcd.o" -c -o "lcd/lcd.o" "../lcd/lcd.c"
+Finished building: ../lcd/lcd.c
+ 
+Building target: EmptyProject.elf
+Invoking: AVR C Linker
+avr-gcc -Wl,-Map,EmptyProject.map -L"/Users/nicolasdubus/Downloads/CEG4166FreeRTOSProjects/FreeRTOS801/Release" -L"/Users/nicolasdubus/Downloads/CEG4166FreeRTOSProjects/CEG4166_RTS_Lib/Release" -mmcu=atmega2560 -o "EmptyProject.elf"  ./lcd/lcd.o  ./main.o  /Users/nicolasdubus/Downloads/CEG4166FreeRTOSProjects/FreeRTOS801/Release/libFreeRTOS801.a -lm -lprintf_flt -lFreeRTOS801 -lCEG4166_RTS_Lib
+Finished building target: EmptyProject.elf
+ 
+Invoking: AVR Create Extended Listing
+avr-objdump -h -S EmptyProject.elf  >"EmptyProject.lss"
+Finished building: EmptyProject.lss
+ 
+Create Flash image (ihex format)
+avr-objcopy -R .eeprom -R .fuse -R .lock -R .signature -O ihex EmptyProject.elf  "EmptyProject.hex"
+Finished building: EmptyProject.hex
+ 
+Create eeprom image (ihex format)
+avr-objcopy -j .eeprom --no-change-warnings --change-section-lma .eeprom=0 -O ihex EmptyProject.elf  "EmptyProject.eep"
+Finished building: EmptyProject.eep
+ 
 Invoking: Print Size
 avr-size --format=avr --mcu=atmega2560 EmptyProject.elf
 AVR Memory Usage
 ----------------
 Device: atmega2560
 
-Program:   22142 bytes (8.4% Full)
+Program:   21020 bytes (8.0% Full)
 (.text + .data + .bootloader)
 
-Data:       4866 bytes (59.4% Full)
+Data:       5037 bytes (61.5% Full)
 (.data + .bss + .noinit)
 
 
 Finished building: sizedummy
  
 
-22:38:30 Build Finished (took 109ms)
+20:27:24 Build Finished (took 281ms)
 

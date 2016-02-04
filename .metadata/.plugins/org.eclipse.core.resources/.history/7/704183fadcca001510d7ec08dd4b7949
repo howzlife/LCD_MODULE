@@ -1,0 +1,91 @@
+////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////
+////    main.c
+////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////
+
+#include <stdlib.h>
+#include <stdbool.h>
+#include <string.h>
+#include <stdio.h>
+
+#include <avr/io.h>
+
+/* Scheduler include files. */
+#include "FreeRTOS.h"
+#include "task.h"
+#include "queue.h"
+#include "semphr.h"
+#include "lcd/lcd.h"
+
+/* serial interface include file. */
+//#include "usartserial.h"
+#include "serial.h"
+
+/*-----------------------------------------------------------*/
+/* Create a handle for the serial port. */
+//extern xComPortHandle xSerialPort;
+
+/*-----------------------------------------------------------*/
+
+/* Main program loop */
+//int main(void) __attribute__((OS_main));
+int usartfda;
+int usartfdb;
+
+int main(void)
+{
+
+	initLCD();
+
+	uint8_t testTemps[9] = {1, 2, 3, 4, 5, 10, 15, 12, 14};
+	displayTemperatures(testTemps);
+
+	vTaskStartScheduler();
+
+}
+
+void displayTemperatures(uint8_t *temperatures) {
+	clearLCD();
+
+	char* topRow = "";
+	sprintf(topRow,
+			"%2d %2d %2d %2d [%2d] \n",
+			temperatures[1],
+			temperatures[2],
+			temperatures[3],
+			temperatures[4],
+			temperatures[0]);
+
+	usart_print_P(PSTR("top row: " + topRow));
+
+	char* bottomRow = "";
+	sprintf(bottomRow,
+			"%2d %2d %2d %2d \n",
+			temperatures[5],
+			temperatures[6],
+			temperatures[7],
+			temperatures[8]);
+
+	usart_print_P(PSTR("bottom row: " + bottomRow));
+	usart_print_P(PSTR("top row 2: " + topRow));
+
+
+	writeLCDRowTwo(bottomRow);
+	writeLCDRowOne(topRow);
+//	writeLCDRowTwo("Hello World");
+}
+
+/*-----------------------------------------------------------*/
+
+
+void vApplicationStackOverflowHook( TaskHandle_t xTask,
+                                    portCHAR *pcTaskName )
+{
+
+	DDRB  |= _BV(DDB7);
+	PORTB |= _BV(PORTB7);       // main (red PB7) LED on. Mega main LED on and die.
+	while(1);
+}
+
+/*-----------------------------------------------------------*/
